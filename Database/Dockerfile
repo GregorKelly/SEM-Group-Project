@@ -2,7 +2,7 @@ FROM mysql
 
 WORKDIR /tmp
 
-COPY data_test/*.sql /tmp/
+COPY data_test/world.sql /tmp/
 
 COPY data_test/world.sql /docker-entrypoint-initdb.d
 
