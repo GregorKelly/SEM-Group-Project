@@ -12,6 +12,15 @@
             </array>
           </option>
         </State>
+        <State>
+          <option name="id" value="d5ef9b7f-eec8-4b1c-af31-be5ce44d7171" />
+          <option name="name" value="world" />
+          <option name="urls">
+            <array>
+              <option value="file://$PROJECT_DIR$/Database/data_test/world.sql" />
+            </array>
+          </option>
+        </State>
       </list>
     </option>
   </component>

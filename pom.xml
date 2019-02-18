@@ -6,7 +6,7 @@
 
     <groupId>Sem_Group_19</groupId>
     <artifactId>seMethodsProject</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 
     <dependencies>
         <dependency>
