@@ -1,0 +1,54 @@
+@startuml
+actor U as "User"
+
+rectangle Database
+
+rectangle "Produce Report" {
+
+    usecase UC1 as "Countries in world population, large to low"
+    usecase UC2 as "Countries in continent population, large to low"
+    usecase UC3 as "Countries in region population, large to low"
+    usecase UC4 as "Top N Population countries in world"
+    usecase UC5 as "Top N population countries in continent"
+    usecase UC6 as "Top N population countries in region"
+    usecase UC7 as "Cities in world population, large to small"
+    usecase UC8 as "Cities in continent population, large to small"
+    usecase UC9 as "Cities in region population, large to small"
+
+
+
+    usecase UCp as "Print Report"
+
+    U - UC1
+    U - UC2
+    U - UC3
+    U - UC4
+    U - UC5
+    U - UC6
+    U - UC7
+    U - UC8
+    U - UC9
+    UC1 ..> UCp : include
+    UC2 ..> UCp : include
+    UC3 ..> UCp : include
+    UC4 ..> UCp : include
+    UC5 ..> UCp : include
+    UC6 ..> UCp : include
+    UC7 ..> UCp : include
+    UC8 ..> UCp : include
+    UC9 ..> UCp : include
+
+
+
+    UC1 - Database
+    UC2- Database
+    UC3 - Database
+    UC4 - Database
+    UC5 - Database
+    UC6 - Database
+    UC7 - Database
+    UC8 - Database
+    UC9 - Database
+}
+
+@enduml
