@@ -80,8 +80,8 @@ public class App {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT Name"
-                    + "FROM country";
+                    "SELECT Name "
+                    + "FROM country ";
                   //  + "ORDER BY country.Population ASC";
 
             ResultSet rset = stmt.executeQuery(strSelect);
