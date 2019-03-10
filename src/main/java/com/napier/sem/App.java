@@ -1,6 +1,8 @@
 package com.napier.sem;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class App {
 
@@ -66,4 +68,32 @@ public class App {
             }
         }
     }
+
+    public List GetCountries()
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT country.Name"
+                    + "FROM country"
+                    + "ORDER BY country.Population ASC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+           List countries = new ArrayList();
+           while (rset.next())
+           {
+               countries.add(rset.getString("country.Name"));
+           }
+           return countries;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print Countries");
+            return null;
+        }
+    }
+
 }
