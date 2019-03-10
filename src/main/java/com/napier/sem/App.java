@@ -80,7 +80,7 @@ public class App {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT country.Name"
+                    "SELECT Name"
                     + "FROM country";
                   //  + "ORDER BY country.Population ASC";
 
