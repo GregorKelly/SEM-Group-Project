@@ -14,6 +14,10 @@ public class App {
         // Connect to database
         a.connect();
 
+        List countries = a.GetCountries();
+
+        System.out.println(countries);
+
         // Disconnect from database
         a.disconnect();
 
