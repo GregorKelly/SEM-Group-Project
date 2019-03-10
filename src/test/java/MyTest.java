@@ -9,6 +9,6 @@ class MyTest
     {
         assertEquals(5, 5);
     }
-    
+
 }
 
