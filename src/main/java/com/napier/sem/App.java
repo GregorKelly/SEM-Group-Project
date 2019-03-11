@@ -34,10 +34,14 @@ public class App {
         System.out.println("Cities in World sorted by population");
         System.out.println(cityWorld);
 
-        List CityCont = a.GetCityCont("Asia");
+        //List CountriesWorldReg = a.GetCountriesWorldReg();
+        //System.out.println("Cities in World sorted by population");
+        //System.out.println(cityWorld);
 
-        System.out.println("Cities in World sorted by population");
-        System.out.println(CityCont);
+        //List CityCont = a.GetCityCont("Asia");
+
+        //System.out.println("Cities in World sorted by population");
+        //System.out.println(CityCont);
         // Disconnect from database
         a.disconnect();
 
@@ -213,8 +217,35 @@ public class App {
             return null;
         }
     }
+    /*
+    public List GetCountriesWorldReg(String continentIn)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
 
-    public List GetCityCont(String cityCont)
+            String strSelect =
+                    "SELECT Name "
+                            + "FROM country " + "'" + continentIn + "' "
+                            + "ORDER BY Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            List countries = new ArrayList();
+            while (rset.next())
+            {
+                countries.add(rset.getString("country.Name"));
+            }
+            return countries;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print Countries from world");
+            return null;
+        }
+    }
+*/
+    /*public List GetCityCont(String cityCont)
     {
         try
         {
@@ -240,6 +271,6 @@ public class App {
             System.out.println("Failed To Print Cities from Continent");
             return null;
         }
-    }
+    }*/
 
 }
