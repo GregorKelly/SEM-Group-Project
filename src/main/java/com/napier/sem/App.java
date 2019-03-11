@@ -189,7 +189,7 @@ public class App {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT Name "
+                    "SELECT city.Name "
                             + "FROM city "
                             + "ORDER BY Population DESC";
 

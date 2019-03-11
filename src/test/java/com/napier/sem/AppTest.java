@@ -28,5 +28,5 @@ public class AppTest
     void CountriesContInvalid()
     {
         app.GetCountriesCont("TestCont");
-    }
+}
 }
