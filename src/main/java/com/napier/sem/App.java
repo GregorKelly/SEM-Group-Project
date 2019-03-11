@@ -81,8 +81,8 @@ public class App {
 
             String strSelect =
                     "SELECT Name "
-                    + "FROM country ";
-                  //  + "ORDER BY country.Population ASC";
+                    + "FROM country "
+                    + "ORDER BY Population ASC";
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
