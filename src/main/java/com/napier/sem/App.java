@@ -24,6 +24,11 @@ public class App {
         System.out.println("Countries in Europe sorted by population");
         System.out.println(countriesCont);
 
+        List countriesReg = a.GetCountriesReg("Middle East");
+
+        System.out.println("Countries in Middle East sorted by population");
+        System.out.println("countriesReg");
+
         // Disconnect from database
         a.disconnect();
 
@@ -116,6 +121,34 @@ public class App {
                     "SELECT Name "
                             + "FROM country "
                             + "WHERE Continent = " + "'" + continentIn + "' "
+                            + "ORDER BY Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            List countries = new ArrayList();
+            while (rset.next())
+            {
+                countries.add(rset.getString("country.Name"));
+            }
+            return countries;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print Countries");
+            return null;
+        }
+    }
+
+    public List GetCountriesReg(String regIn)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT Name "
+                            + "FROM country "
+                            + "WHERE Region = " + "'" + regIn + "' "
                             + "ORDER BY Population DESC";
 
             ResultSet rset = stmt.executeQuery(strSelect);
