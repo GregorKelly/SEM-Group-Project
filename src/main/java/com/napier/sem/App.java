@@ -14,10 +14,25 @@ public class App {
         // Connect to database
         a.connect("localhost:33060");
 
-        List countries = a.GetCountries();
+        List countriesWorld = a.GetCountriesWorld();
 
-        System.out.println(countries);
+        System.out.println("Countries in the world sorted by population");
+        System.out.println(countriesWorld);
 
+        List countriesCont = a.GetCountriesCont("Europe");
+
+        System.out.println("Countries in Europe sorted by population");
+        System.out.println(countriesCont);
+
+        List countriesReg = a.GetCountriesReg("Middle East");
+
+        System.out.println("Countries in Middle East sorted by population");
+        System.out.println(countriesReg);
+
+        List cityWorld = a.GetCityWorld();
+
+        System.out.println("Cities in World sorted by population");
+        System.out.println(cityWorld);
         // Disconnect from database
         a.disconnect();
 
@@ -73,7 +88,7 @@ public class App {
         }
     }
 
-    public List GetCountries()
+    public List GetCountriesWorld()
     {
         try
         {
@@ -81,8 +96,8 @@ public class App {
 
             String strSelect =
                     "SELECT Name "
-                    + "FROM country ";
-                  //  + "ORDER BY country.Population ASC";
+                    + "FROM country "
+                    + "ORDER BY Population DESC";
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
@@ -95,9 +110,120 @@ public class App {
         }
         catch(Exception e){
             System.out.println(e.getMessage());
-            System.out.println("Failed To Print Countries");
+            System.out.println("Failed To Print Countries from world");
             return null;
         }
     }
+
+    public List GetCountriesCont(String continentIn)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT Name "
+                            + "FROM country "
+                            + "WHERE Continent = " + "'" + continentIn + "' "
+                            + "ORDER BY Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            List countries = new ArrayList();
+            while (rset.next())
+            {
+                countries.add(rset.getString("country.Name"));
+            }
+            return countries;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print Countries from continent");
+            return null;
+        }
+    }
+
+    public List GetCountriesReg(String regIn)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT Name "
+                            + "FROM country "
+                            + "WHERE Region = " + "'" + regIn + "' "
+                            + "ORDER BY Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            List countries = new ArrayList();
+            while (rset.next())
+            {
+                countries.add(rset.getString("country.Name"));
+            }
+            return countries;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print Countries from region");
+            return null;
+        }
+    }
+
+    public List GetCityWorld()
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT Name "
+                            + "FROM city "
+                            + "ORDER BY Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            List countries = new ArrayList();
+            while (rset.next())
+            {
+                countries.add(rset.getString("country.Name"));
+            }
+            return countries;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print Cities from World");
+            return null;
+        }
+    }
+
+   /* public List GetCityCont(String cityCont)
+    {
+        try
+        {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT Name "
+                            + "FROM city "
+                            + "WHERE "
+                            + "ORDER BY Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            List countries = new ArrayList();
+            while (rset.next())
+            {
+                countries.add(rset.getString("country.Name"));
+            }
+            return countries;
+        }
+        catch(Exception e){
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print Cities from World");
+            return null;
+        }
+    }*/
 
 }
