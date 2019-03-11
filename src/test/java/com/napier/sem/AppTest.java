@@ -25,8 +25,27 @@ public class AppTest
     }
 
     @Test
+    void CountriesWorldNull()
+    {
+        app.GetCountriesCont("");
+    }
+
+    @Test
     void CountriesContInvalid()
     {
         app.GetCountriesCont("TestCont");
-}
+    }
+
+    @Test
+    void CountriesContNotNull()
+    {
+        app.GetCountriesCont(null);
+    }
+
+    @Test
+    void CountriesContNull()
+    {
+        app.GetCountriesCont("");
+    }
+
 }
