@@ -117,6 +117,17 @@ public class App {
 
     public List GetCountriesCont(String continentIn)
     {
+        if(continentIn == null)
+        {
+            System.out.println("No continent entered");
+            return null;
+        }
+
+        if(continentIn != "Europe" && continentIn != "Asia" && continentIn != "North America" && continentIn != "Africa" && continentIn != "Oceania" && continentIn != "Antartica" && continentIn != "South America")
+        {
+            System.out.println("Invalid Continent Entered");
+            return null;
+        }
         try
         {
             Statement stmt = con.createStatement();

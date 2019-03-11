@@ -21,6 +21,12 @@ public class AppTest
     @Test
     void CountriesWorldNotNull()
     {
-        assertNotNull(app.GetCountries());
+        app.GetCountriesCont(null);
+    }
+
+    @Test
+    void CountriesContInvalid()
+    {
+        app.GetCountriesCont("TestCont");
     }
 }
