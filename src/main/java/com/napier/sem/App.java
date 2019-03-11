@@ -189,7 +189,7 @@ public class App {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT city.Name "
+                    "SELECT Name "
                             + "FROM city "
                             + "ORDER BY Population DESC";
 
@@ -198,7 +198,7 @@ public class App {
             List countries = new ArrayList();
             while (rset.next())
             {
-                countries.add(rset.getString("country.Name"));
+                countries.add(rset.getString("city.Name"));
             }
             return countries;
         }
