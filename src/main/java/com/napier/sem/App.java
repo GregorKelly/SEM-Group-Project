@@ -115,7 +115,7 @@ public class App {
             String strSelect =
                     "SELECT Name "
                             + "FROM country "
-                            + "WHERE Continent = " + continentIn + " "
+                            + "WHERE Continent = 'continentIn' "
                             + "ORDER BY Population DESC";
 
             ResultSet rset = stmt.executeQuery(strSelect);
