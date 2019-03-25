@@ -22,8 +22,8 @@ public class AppIntegrationTest
 
     @Test
     void testHighPopCount()
-    {
-        List CountriesWorld = app.GetCountriesWorld();
-        assertEquals(CountriesWorld.get(0), "China");
-    }
+{
+    List CountriesWorld = app.GetCountriesWorld();
+    assertEquals(CountriesWorld.get(0), "China");
+}
 }
