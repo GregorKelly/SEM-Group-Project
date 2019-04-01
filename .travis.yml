@@ -108,8 +108,3 @@ after_success:
 # Push code coverage data to codecov.
 - bash <(curl -s https://codecov.io/bash)
 
-before_install:
-# Decrypts the credentials file.
-# The keyname will be different for your project.
-- openssl aes-256-cbc -K $encrypted_b295e594d102_key -iv $encrypted_b295e594d102_iv
-  -in client-secret.json.enc -out client-secret.json -d
