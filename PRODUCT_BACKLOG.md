@@ -29,3 +29,37 @@ __Week 5__
 The tasks in which the team will complete this week are as follows:
 *   Set up Sprint Board
 *   Define full use cases
+
+
+__Week 6__
+
+Tasks set out for the team to complete were:
+* UML diagrams to be done
+* Use Case diagrams to be done
+
+
+__Week 7__
+
+Tasks set out for the team to complete were:
+* Finish any unfinished tasks
+* Start writing out unit tests
+
+
+__Week 8__
+
+Tasks set out for the team to complete were:
+* Continue writing out unit tests
+* Work on Test Driven Development
+
+
+__Week 9__
+
+Tasks set out for the team to complete were:
+* Work on any unfinished tasks
+
+
+__Week 10__
+
+Tasks set out for the team to complete were:
+* Work on unfinished tasks
+* Start work on Deployment

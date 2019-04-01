@@ -1,5 +1,4 @@
 FROM openjdk:latest
-COPY ./target/seMethodsProject-1.2-jar-with-dependencies.jar /tmp
+COPY ./target/seMethods.jar /tmp
 WORKDIR /tmp
-ENTRYPOINT ["java", "-jar", "seMethodsProject-1.2-jar-with-dependencies.jar"]
-
+ENTRYPOINT ["java", "-jar", "seMethods.jar", "db:3306"]

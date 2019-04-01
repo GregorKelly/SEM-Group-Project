@@ -33,6 +33,7 @@
             <plugin>
                 <artifactId>maven-assembly-plugin</artifactId>
                 <configuration>
+                    <finalName>seMethods</finalName>
                     <archive>
                         <manifest>
                             <mainClass>com.napier.sem.App</mainClass>
@@ -41,6 +42,7 @@
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
+                    <appendAssemblyId>false</appendAssemblyId>
                 </configuration>
                 <executions>
                     <execution>
@@ -60,6 +62,7 @@
                 <dependencies>
                     <dependency>
                         <groupId>org.junit.platform</groupId>
+
                         <artifactId>junit-platform-surefire-provider</artifactId>
                         <version>1.1.0</version>
                     </dependency>
