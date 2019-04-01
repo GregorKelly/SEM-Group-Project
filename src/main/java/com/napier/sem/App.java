@@ -40,6 +40,12 @@ public class App {
 
         System.out.println("Cities in World sorted by population");
         System.out.println(cityWorld);
+
+
+       // List cityCont = a.GetCityCont(); GOTTA FIX
+        System.out.println("Cities in a Continent sorted by population");
+       // System.out.println(cityCont); ADD BACK IN ONCE LIST ERROR FIXED
+
         // Disconnect from database
         a.disconnect();
 
@@ -226,8 +232,20 @@ public class App {
         }
     }
 
-   /* public List GetCityCont(String cityCont)
+    public List GetCityCont(String continentIn)
     {
+        if(continentIn == null)
+        {
+            System.out.println("No continent entered");
+            return null;
+        }
+
+        if(continentIn != "Europe" && continentIn != "Asia" && continentIn != "North America" && continentIn != "Africa" && continentIn != "Oceania" && continentIn != "Antartica" && continentIn != "South America")
+        {
+            System.out.println("Invalid Continent Entered");
+            return null;
+        }
+
         try
         {
             Statement stmt = con.createStatement();
@@ -235,7 +253,7 @@ public class App {
             String strSelect =
                     "SELECT Name "
                             + "FROM city "
-                            + "WHERE "
+                            + "WHERE Continent = " + "'" + continentIn + "' "
                             + "ORDER BY Population DESC";
 
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -249,9 +267,9 @@ public class App {
         }
         catch(Exception e){
             System.out.println(e.getMessage());
-            System.out.println("Failed To Print Cities from World");
+            System.out.println("Failed To Print Cities from Continent");
             return null;
         }
-    }*/
+    }
 
 }
