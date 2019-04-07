@@ -78,7 +78,7 @@ jobs:
     - gcloud auth activate-service-account --key-file client-secret.json
     script:
     # Set the project we will work in.
-    - gcloud config set project semethodsgroup-
+    - gcloud config set project semethodsgroup
     # Set the zone to work in.
     - gcloud config set compute/zone europe-west2-b
     # Assign project ID to a variable to make life easier
@@ -103,3 +103,7 @@ stages:
   if: branch = master
 - name: Google Cloud Deploy
   if: branch = master
+
+before_install:
+- openssl aes-256-cbc -K $encrypted_d2ade4c6304d_key -iv $encrypted_d2ade4c6304d_iv
+  -in client-secretMain.json.enc -out client-secretMain.json -d
