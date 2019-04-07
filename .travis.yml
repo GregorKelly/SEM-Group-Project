@@ -1,9 +1,109 @@
-sudo: required
 language: java
+
+sudo: false
+
+addons:
+  hosts:
+  - db
+
+env:
+  global:
+  # Ensure Google Cloud SDK doesn't prompt for installing.
+  - CLOUDSDK_CORE_DISABLE_PROMPTS=1
+
 services:
 - docker
-after_success:
-- docker-compose up --abort-on-container-exit
+
+install:
+# Build database image.
+- docker build -t database db/.
+# Run the database image.
+- docker run --rm -d -e MYSQL_ROOT_PASSWORD=example -p 33060:3306 database
+# Build and install the application.
+- mvn install -DskipTests=true -Dmaven.javadoc.skip=true -B -V
+
+before_script:
+# Clean any files.
+- mvn clean
+
+# Job stages
+jobs:
+  include:
+  # Unit test stage.
+  - stage: unit tests
+    install: skip
+    jdk: oraclejdk11
+    # Tell Maven to run the unit tests.
+    script: mvn test -Dtest=com.napier.sem.AppTest
+  # Integration test stage.
+  - stage: integration tests
+    jdk: oraclejdk11
+    # Tell Maven to run the integration tests.
+    script: mvn test -Dtest=com.napier.sem.AppIntegrationTest
+  # GitHub release stage.
+  - stage: GitHub Release
+    install: skip
+    jdk: oraclejdk11
+    script:
+    - echo "Deploying to GitHub Releases"
+    # Package the Application.
+    - mvn package -DskipTests=true -Dmaven.javadoc.skip=true
+    before_deploy:
+    # Set our Git user name and email.
+    - git config --local user.name "Alfie Maedhbh Gregor"
+    - git config --local user.email "alfiethomasson0@Gmail.com"
+    # Create unique tag for the commit.
+    - export TRAVIS_TAG=${TRAVIS_TAG:-$(date +'%Y-%m-%d')-$(git log --format=%h -1)}
+    # Tag the commit.
+    - git tag $TRAVIS_TAG
+    deploy:
+      provider: releases
+      # Token saved on Travis.
+      api_key: "$GITHUB_OAUTH_TOKEN"
+      # File to add to the release.
+      file: "$TRAVIS_BUILD_DIR/target/seMethods.jar"
+      skip_cleanup: true
+  - stage: Google Cloud Deploy
+    install: skip
+    jdk: oraclejdk11
+    before_script:
+    # Check if Google Cloud SDK is installed.
+    - if [ ! -d ${HOME}/google-cloud-sdk ]; then curl https://sdk.cloud.google.com | bash
+        > /dev/null; fi
+    - source $HOME/google-cloud-sdk/path.bash.inc
+    # Install Kubernetes control to manage containers
+    - gcloud components install kubectl
+    - gcloud version
+    # Login to our Google Cloud Account using credentials file
+    - gcloud auth activate-service-account --key-file client-secret.json
+    script:
+    # Set the project we will work in.
+    - gcloud config set project semethodsgroup
+    # Set the zone to work in.
+    - gcloud config set compute/zone europe-west2-b
+    # Assign project ID to a variable to make life easier
+    - export PROJECT_ID="$(gcloud config get-value project -q)"
+    # Authenticate against Google's Docker image manager.
+    - gcloud auth configure-docker
+    # Build the database image.
+    - docker build -t gcr.io/${PROJECT_ID}/db db/.
+    # Push the database image.
+    - docker push gcr.io/${PROJECT_ID}/db
+    # Create a container cluster.  We only need one node.
+    - gcloud container clusters create hr-cluster --num-nodes=1
+    # Tell kubernetes to run the built database image, opening port 3306
+    - kubectl run hr --image=gcr.io/${PROJECT_ID}/db --port 3306
+    # Expose the cluster to the Internet, mapping external port 3306 to internal port 3306.
+    - kubectl expose deployment hr --port=3306 --target-port=3306 --type=LoadBalancer
+
+stages:
+- unit tests
+- integration tests
+- name: GitHub Release
+  if: branch = master
+- name: Google Cloud Deploy
+  if: branch = master
+
 before_install:
 - openssl aes-256-cbc -K $encrypted_d2ade4c6304d_key -iv $encrypted_d2ade4c6304d_iv
   -in client-secretMain.json.enc -out client-secretMain.json -d
