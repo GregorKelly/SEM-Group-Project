@@ -1,9 +1,9 @@
 sudo: required
-
 language: java
-
 services:
 - docker
-
 after_success:
 - docker-compose up --abort-on-container-exit
+before_install:
+- openssl aes-256-cbc -K $encrypted_d2ade4c6304d_key -iv $encrypted_d2ade4c6304d_iv
+  -in client-secretMain.json.enc -out client-secretMain.json -d
