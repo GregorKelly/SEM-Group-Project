@@ -75,7 +75,7 @@ jobs:
     - gcloud components install kubectl
     - gcloud version
     # Login to our Google Cloud Account using credentials file
-    - gcloud auth activate-service-account --key-file client-secret.json
+    - gcloud auth activate-service-account --key-file client-secretMain.json
     script:
     # Set the project we will work in.
     - gcloud config set project semethodsgroup
