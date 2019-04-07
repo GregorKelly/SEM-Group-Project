@@ -16,25 +16,25 @@ public class App {
     public static void main(String[] args) {
 
         // Create new Application
-        App a = new App();
+       // App a = new App();
 
         // Connect to database
         if (args.length < 1)
         {
-            a.connect("localhost:3306");
+            connect("localhost:3306");
         }
         else
         {
-            a.connect(args[0]);
+            connect(args[0]);
         }
 
         SpringApplication.run(App.class, args);
 
-        List countriesWorld = a.GetCountriesWorld();
+       // List countriesWorld = GetCountriesWorld();
 
-        System.out.println("Countries in the world sorted by population");
-        System.out.println(countriesWorld);
-
+       // System.out.println("Countries in the world sorted by population");
+       // System.out.println(countriesWorld);
+/*
         List countriesCont = a.GetCountriesCont("Europe");
 
         System.out.println("Countries in Europe sorted by population");
@@ -60,7 +60,7 @@ public class App {
         //System.out.println(CityCont);
         // Disconnect from database
         a.disconnect();
-
+*/  disconnect();
     }
 
     /**
@@ -123,6 +123,7 @@ public class App {
         }
     }
 
+    @RequestMapping("CountriesWorld")
     public List GetCountriesWorld()
     {
         try
