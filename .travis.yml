@@ -112,7 +112,7 @@ stages:
 - name: GitHub Release
   if: branch = master
 - name: Google Cloud Deploy
-  if: branch = master
+  if: branch = feature/lab9
 
 before_install:
 - openssl aes-256-cbc -K $encrypted_d2ade4c6304d_key -iv $encrypted_d2ade4c6304d_iv
