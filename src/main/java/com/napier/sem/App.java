@@ -4,28 +4,39 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@SpringBootApplication
+@RestController
+
 public class App {
 
     public static void main(String[] args) {
 
         // Create new Application
-        App a = new App();
+       // App a = new App();
 
         // Connect to database
         if (args.length < 1)
         {
-            a.connect("localhost:3306");
+            connect("localhost:33060");
         }
         else
         {
-            a.connect(args[0]);
+            connect(args[0]);
         }
 
-        List countriesWorld = a.GetCountriesWorld();
+        SpringApplication.run(App.class, args);
 
-        System.out.println("Countries in the world sorted by population");
-        System.out.println(countriesWorld);
+       // List countriesWorld = GetCountriesWorld();
 
+       // System.out.println("Countries in the world sorted by population");
+       // System.out.println(countriesWorld);
+/*
         List countriesCont = a.GetCountriesCont("Europe");
 
         System.out.println("Countries in Europe sorted by population");
@@ -51,18 +62,18 @@ public class App {
         //System.out.println(CityCont);
         // Disconnect from database
         a.disconnect();
-
+*/  disconnect();
     }
 
     /**
      * Connection to MySQL database.
      */
-    private Connection con = null;
+    private static Connection con = null;
 
     /**
      * Connect to the MySQL database.
      */
-    public void connect(String location)
+    public static void connect(String location)
     {
         try
         {
@@ -103,7 +114,7 @@ public class App {
     /**
      * Disconnect from the MySQL database.
      */
-    public void disconnect() {
+    public static void disconnect() {
         if (con != null) {
             try {
                 // Close connection
@@ -114,6 +125,7 @@ public class App {
         }
     }
 
+    @RequestMapping("CountriesWorld")
     public List GetCountriesWorld()
     {
         try
@@ -179,7 +191,7 @@ public class App {
             return null;
         }
     }
-
+/*
     public List GetCountriesReg(String regIn)
     {
         try
@@ -234,7 +246,7 @@ public class App {
             return null;
         }
     }
-    /*
+
     public List GetCountriesWorldReg(String continentIn)
     {
         try
