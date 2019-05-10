@@ -3,6 +3,7 @@ package com.napier.sem;
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @SpringBootApplication
 @RestController
+
 public class App {
 
     public static void main(String[] args) {
@@ -21,7 +23,7 @@ public class App {
         // Connect to database
         if (args.length < 1)
         {
-            connect("localhost:3306");
+            connect("localhost:33060");
         }
         else
         {
@@ -189,7 +191,7 @@ public class App {
             return null;
         }
     }
-
+/*
     public List GetCountriesReg(String regIn)
     {
         try
@@ -244,7 +246,7 @@ public class App {
             return null;
         }
     }
-    /*
+
     public List GetCountriesWorldReg(String continentIn)
     {
         try
