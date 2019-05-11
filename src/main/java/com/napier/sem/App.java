@@ -18,24 +18,21 @@ public class App {
     public static void main(String[] args) {
 
         // Create new Application
-       // App a = new App();
+        // App a = new App();
 
         // Connect to database
-        if (args.length < 1)
-        {
+        if (args.length < 1) {
             connect("localhost:33060");
-        }
-        else
-        {
+        } else {
             connect(args[0]);
         }
 
         SpringApplication.run(App.class, args);
 
-       // List countriesWorld = GetCountriesWorld();
+        // List countriesWorld = GetCountriesWorld();
 
-       // System.out.println("Countries in the world sorted by population");
-       // System.out.println(countriesWorld);
+        // System.out.println("Countries in the world sorted by population");
+        // System.out.println(countriesWorld);
 /*
         List countriesCont = a.GetCountriesCont("Europe");
 
@@ -62,7 +59,8 @@ public class App {
         //System.out.println(CityCont);
         // Disconnect from database
         a.disconnect();
-*/  disconnect();
+*/
+        //disconnect();
     }
 
     /**
@@ -73,39 +71,29 @@ public class App {
     /**
      * Connect to the MySQL database.
      */
-    public static void connect(String location)
-    {
-        try
-        {
+    public static void connect(String location) {
+        try {
             // Load Database driver
             Class.forName("com.mysql.cj.jdbc.Driver");
-        }
-        catch (ClassNotFoundException e)
-        {
+        } catch (ClassNotFoundException e) {
             System.out.println("Could not load SQL driver");
             System.exit(-1);
         }
 
         int retries = 10;
-        for (int i = 0; i < retries; ++i)
-        {
+        for (int i = 0; i < retries; ++i) {
             System.out.println("Connecting to database...");
-            try
-            {
+            try {
                 // Wait a bit for db to start
                 Thread.sleep(30000);
                 // Connect to database
                 con = DriverManager.getConnection("jdbc:mysql://" + location + "/world?allowPublicKeyRetrieval=true&useSSL=false", "root", "example");
                 System.out.println("Successfully connected");
                 break;
-            }
-            catch (SQLException sqle)
-            {
+            } catch (SQLException sqle) {
                 System.out.println("Failed to connect to database attempt " + Integer.toString(i));
                 System.out.println(sqle.getMessage());
-            }
-            catch (InterruptedException ie)
-            {
+            } catch (InterruptedException ie) {
                 System.out.println("Thread interrupted? Should not happen.");
             }
         }
@@ -126,34 +114,82 @@ public class App {
     }
 
     @RequestMapping("CountriesWorld")
-    public List GetCountriesWorld()
-    {
-        try
+    public ArrayList<Country> getCountriesWorld(@RequestParam(value = "name") String Name) {
         {
-            Statement stmt = con.createStatement();
+            try {
+                Statement stmt = con.createStatement();
 
-            String strSelect =
-                    "SELECT Name "
-                    + "FROM country "
-                    + "ORDER BY Population DESC";
+                String strSelect =
+                        "SELECT Name, Population "
+                                + "FROM country "
+                                + "ORDER BY Population DESC";
 
-            ResultSet rset = stmt.executeQuery(strSelect);
+                ResultSet rset = stmt.executeQuery(strSelect);
 
-           List countries = new ArrayList();
-           while (rset.next())
-           {
-               countries.add(rset.getString("country.Name"));
-           }
-           return countries;
+                ArrayList<Country> countryArray = new ArrayList<>();
+                while (rset.next()) {
+                    Country country = new Country();
+                    country.CountryName = rset.getString("Name");
+                    country.population = rset.getInt("Population");
+                    countryArray.add(country);
+                }
+                return countryArray;
+
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("Failed To Print Countries from world");
+                return null;
+            }
         }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Failed To Print Countries from world");
-            return null;
-        }
-    }
 
-    public List GetCountriesCont(String continentIn)
+        /*public ArrayList<Country> getCountriesWorld(){
+            try {
+                // Create an SQL statement
+                Statement stmt = con.createStatement();
+                // Create string for SQL statement
+                String strSelect =
+                        "SELECT country.Code, country.Name, country.Continent, country.Region, country.Population, country.Capital "
+                                + "FROM country "
+                                + "ORDER BY country.Population DESC";
+                // Execute SQL statement
+                ResultSet rset = stmt.executeQuery(strSelect);
+                // Extract country information
+                ArrayList<Country> countryArray = new ArrayList<>();
+                while (rset.next()) {
+                    Country country = new Country();
+
+                    country.CountryName = rset.getString("country.Name");
+                    country.population = rset.getInt("country.Population");
+
+                    countryArray.add(country);
+                }
+                return countryArray;
+            } catch (Exception e) {
+                System.out.println(e.getMessage());
+                System.out.println("Failed to get country details");
+                return null;
+            }
+        }
+
+        public void displayWorldCountries(ArrayList<Country> countryArray) {
+            // Check the country arraylist is not null
+            if (countryArray == null) {
+                System.out.println("No countries");
+                return;
+            }
+            // Print header
+            System.out.println(String.format("%-15s %-20s %-15s %-20s %-15s %-20s", "Country Code", "Name", "Continent", "Region", "Population", "Capital"));
+            // Loop over all countries in the list
+            for (Country country : countryArray) {
+                String country_string =
+                        String.format("%-15s %-20s %-15s %-20s %-15s %-20s",
+                                 country.CountryName, country.population);
+                System.out.println(country_string);
+            }
+            System.out.println("\n");
+        }
+
+   /* public List GetCountriesCont(String continentIn)
     {
         if(continentIn == null)
         {
@@ -191,8 +227,8 @@ public class App {
             return null;
         }
     }
-/*
-    public List GetCountriesReg(String regIn)
+    /*
+   public List GetCountriesReg(String regIn)
     {
         try
         {
@@ -301,5 +337,7 @@ public class App {
             return null;
         }
     }*/
+
+    }
 
 }
