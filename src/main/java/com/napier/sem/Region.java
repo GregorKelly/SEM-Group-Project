@@ -4,13 +4,13 @@ public class Region {
 
     public String Name;
 
-    public long population;
+    public long Population;
 
-    public long cityPopulation;
+    public long CityPopulation;
 
-    public float cityPopulationPercent;
+    public float CityPopulationPercent;
 
-    public long notCityPopulation;
+    public long NotCityPopulation;
 
-     public float notCityPopulationPercent;
+     public float NotCityPopulationPercent;
 }

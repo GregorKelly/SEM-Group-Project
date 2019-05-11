@@ -10,8 +10,8 @@ public class Country {
 
     public String Continent;
 
-    public String region;
+    public String Region;
 
-    public int population;
+    public int Population;
 
 }

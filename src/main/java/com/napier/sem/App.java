@@ -132,9 +132,9 @@ public class App {
                 Country country = new Country();
                 country.CountryCode = rset.getString("Code");
                 country.CountryName = rset.getString("Name");
-                country.population = rset.getInt("Population");
+                country.Population = rset.getInt("Population");
                 country.Continent = rset.getString("Continent");
-                country.region = rset.getString("Region");
+                country.Region = rset.getString("Region");
                 countryArray.add(country);
             }
             return countryArray;
@@ -164,8 +164,8 @@ public class App {
                 country.CountryCode = rset.getString("country.Code");
                 country.CountryName = rset.getString("country.Name");
                 country.Continent = rset.getString("country.Continent");
-                country.region = rset.getString("country.Region");
-                country.population = rset.getInt("country.Population");
+                country.Region = rset.getString("country.Region");
+                country.Population = rset.getInt("country.Population");
                 countryArray.add(country);
             }
             return countryArray;
@@ -188,7 +188,7 @@ public class App {
         for (Country country : countryArray) {
             String country_string =
                     String.format("%-15s %-20s %-15s %-20s %-15s",
-                            country.CountryCode, country.CountryName, country.Continent, country.region, country.population);
+                            country.CountryCode, country.CountryName, country.Continent, country.Region, country.Population);
             System.out.println(country_string);
         }
         System.out.println("\n");
@@ -220,9 +220,9 @@ public class App {
                 //country.CountryCode = rset.getString("Code");
                 country.CountryName = rset.getString("Name");
                 country.Continent = rset.getString("Continent");
-                country.population = rset.getInt("Population");
+                country.Population = rset.getInt("Population");
                 country.Continent = rset.getString("Continent");
-                country.region = rset.getString("Region");
+                country.Region = rset.getString("Region");
                 countryArray.add(country);
             }
             return countryArray;
@@ -257,8 +257,8 @@ public class App {
                 country.CountryCode = rset.getString("country.Code");
                 country.CountryName = rset.getString("country.Name");
                 country.Continent = rset.getString("country.Continent");
-                country.region = rset.getString("country.Region");
-                country.population = rset.getInt("country.Population");
+                country.Region = rset.getString("country.Region");
+                country.Population = rset.getInt("country.Population");
                 countryArray.add(country);
             }
             return countryArray;
@@ -281,7 +281,7 @@ public class App {
         for (Country country : countryArray) {
             String country_string =
                     String.format("%-15s %-20s %-15s %-20s %-15s",
-                            country.CountryCode, country.CountryName, country.Continent, country.region, country.population);
+                            country.CountryCode, country.CountryName, country.Continent, country.Region, country.Population);
             System.out.println(country_string);
         }
         System.out.println("\n");
@@ -374,6 +374,185 @@ public class App {
     }
 
 
+    //8- See all cites in Continent ***WORKS***
+    @RequestMapping("/CitesContinent")
+    public ArrayList<City> getCitiesContinent() {
+
+        try {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.ID, city.Name, city.District, city.Population "
+                            + "FROM city JOIN country ON city.CountryCode = country.Code "
+                            + "WHERE country.continent='Europe'"
+                            + "ORDER BY city.Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityArray = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.CityID = rset.getInt("ID");
+                city.CityName = rset.getString("Name");
+                city.District = rset.getString("District");
+                city.population = rset.getInt("Population");
+                city.CountryName = rset.getString("Name");
+
+
+                cityArray.add(city);
+            }
+            return cityArray;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print city from world");
+            return null;
+        }
+    }
+
+    public ArrayList<City> getTheCitiesContinent(){
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                            + "FROM city JOIN country ON city.CountryCode = country.Code "
+                            + "WHERE country.continent='Europe'"
+                            + "ORDER BY city.Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract country information
+            ArrayList<City> cityArray = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.CityID = rset.getInt("ID");
+                city.CityName = rset.getString("Name");
+                city.District = rset.getString("District");
+                city.population = rset.getInt("Population");
+                city.CountryCode = rset.getString("Code");
+                city.CountryName = rset.getString("Name");
+
+                cityArray.add(city);
+            }
+            return cityArray;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public void displayCitiesContinent(ArrayList<City> cityArray) {
+        // Check the country arraylist is not null
+        if (cityArray == null) {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.println(String.format("%-15s %-20s %-15s %-20s %-15s", "Name", "Country", "District", "Population"));
+        // Loop over all countries in the list
+        for (City city : cityArray) {
+            String country_string =
+                    String.format("%-20s %-20s %-15s %-15s",
+                            city.CityName, city.CountryName, city.District, city.population);
+            System.out.println(country_string);
+        }
+        System.out.println("\n");
+    }
+
+
+    //9 - See all cites in Region ***WORKS***
+
+    @RequestMapping("/CitesRegion")
+    public ArrayList<City> getCitiesRegion() {
+
+        try {
+            Statement stmt = con.createStatement();
+
+            String strSelect =
+                    "SELECT city.ID, city.Name, city.District, city.Population "
+                            + "FROM city JOIN country ON city.CountryCode = country.Code "
+                            + "WHERE country.region='Eastern Europe'"
+                            + "ORDER BY city.Population DESC";
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<City> cityArray = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.CityID = rset.getInt("ID");
+                city.CityName = rset.getString("Name");
+                city.District = rset.getString("District");
+                city.population = rset.getInt("Population");
+                city.CountryName = rset.getString("Name");
+
+                cityArray.add(city);
+            }
+            return cityArray;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed To Print city from world");
+            return null;
+        }
+    }
+
+    public ArrayList<City> getTheCitiesRegion(){
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
+                            + "FROM city JOIN country ON city.CountryCode = country.Code "
+                            + "WHERE country.region='Eastern Europe'"
+                            + "ORDER BY city.Population DESC";
+            // Execute SQL statement
+            ResultSet rset = stmt.executeQuery(strSelect);
+            // Extract country information
+            ArrayList<City> cityArray = new ArrayList<>();
+            while (rset.next()) {
+                City city = new City();
+                city.CityID = rset.getInt("ID");
+                city.CityName = rset.getString("Name");
+                city.District = rset.getString("District");
+                city.population = rset.getInt("Population");
+                city.CountryCode = rset.getString("Code");
+                city.CountryName = rset.getString("Name");
+
+                cityArray.add(city);
+            }
+            return cityArray;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed to get city details");
+            return null;
+        }
+    }
+
+    public void displayCitiesRegion(ArrayList<City> cityArray) {
+        // Check the country arraylist is not null
+        if (cityArray == null) {
+            System.out.println("No cities");
+            return;
+        }
+        // Print header
+        System.out.println(String.format("%-15s %-20s %-15s %-20s %-15s", "Name", "Country", "District", "Population"));
+        // Loop over all countries in the list
+        for (City city : cityArray) {
+            String country_string =
+                    String.format("%-20s %-20s %-15s %-15s",
+                            city.CityName, city.CountryName, city.District, city.population);
+            System.out.println(country_string);
+        }
+        System.out.println("\n");
+    }
+
+
+
     ///10 - See cities in Country ***WORKS***
     @RequestMapping("/countryCities")
     public ArrayList<City> getCountryCities() {
@@ -415,7 +594,7 @@ public class App {
             String strSelect =
                     "SELECT city.ID, city.Name, city.CountryCode, city.District, city.Population "
                             + "FROM city JOIN country ON city.CountryCode = country.Code "
-                            + "WHERE country.name IS Scotland"
+                            + "WHERE country.name='United Kingdom'"
                             + "ORDER BY city.Population DESC";
             // Execute SQL statement
             ResultSet rset = stmt.executeQuery(strSelect);
@@ -457,7 +636,7 @@ public class App {
         System.out.println("\n");
     }
 
-    ///12 - See cities in District
+    ///12 - See cities in District ***WORKS***
     @RequestMapping("/CitiesDistrict")
     public ArrayList<City> getCitiesDistrict() {
         try {
@@ -540,10 +719,6 @@ public class App {
         System.out.println("\n");
     }
 
-
-
-
-
     //26 - See population of the world ***WORKS***
     @RequestMapping("/PopulationWorld")
     public ArrayList<World> getPoulationWorld(/*@RequestParam(value = "name") String Name*/) {
@@ -613,9 +788,9 @@ public class App {
 
 
 
-    //27 - See population of the continent ***DOESNT WORK***
+    //27 - See population of the continent ***WORKS***
     @RequestMapping("/PopulationContinent")
-    public ArrayList<Continent> getPoulationContinent(/*@RequestParam(value = "continent") String continent*/) {
+    public ArrayList<Continent> getPopulationOfContinent(/*@RequestParam(value = "continent") String continent*/) {
 
         try {
             Statement stmt = con.createStatement();
@@ -624,7 +799,7 @@ public class App {
                     "SELECT country.Continent, SUM(country.Population)/*/SUM(city.Population))*/,(SUM(city.Population)/SUM(country.Population))*100," +
                             " SUM(country.Population)-SUM(city.Population), ((SUM(country.Population)-SUM(city.Population))/SUM(country.Population))*100 "
                             + "FROM country JOIN city ON country.Code = city.CountryCode "
-                            + "WHERE country.Continent LIKE '" + "Europe" + "' "
+                            + "WHERE country.Continent='Europe'"
                             + "GROUP BY country.Continent";
 
 
@@ -635,59 +810,12 @@ public class App {
             while (rset.next()) {
                 Continent continentPopulation = new Continent();
                 continentPopulation.Name = rset.getString("country.Continent");
-                continentPopulation.population = rset.getInt("SUM(country.Population)");
-                continentPopulation.CityPopulation = rset.getInt("SUM(city.Population)");
-                continentPopulation.CityPopulationPercent = rset.getFloat("(SUM(city.Population)/SUM(country.Population))*100");
-                continentPopulation.NotCityPopulation = rset.getInt("SUM(country.Population)-SUM(city.Population)");
-                continentPopulation.NotCityPopulationPercent = rset.getFloat("((SUM(country.Population)-SUM(city.Population))/SUM(country.Population))*100");
-                continentArray.add(continentPopulation);
-            }
-            return continentArray;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed To get population ");
-            return null;
-        }
-    }
-
-    @RequestMapping("/PopulationPercentContinent")
-    public ArrayList<Continent> getPoulationPercentContinent() {
-
-        try {
-            Statement stmt = con.createStatement();
-
-            String strSelect =
-                    "SELECT country.Continent, SUM(city.Population)"
-                            + "FROM country JOIN city ON country.Code = city.CountryCode "
-                            + "GROUP BY country.Continent";
-
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            ArrayList<Continent> continentArray = new ArrayList<>();
-
-            List<String> continents = new ArrayList<>();
-            continents.add("Asia");
-            continents.add("Europe");
-            continents.add("North America");
-            continents.add("Africa");
-            continents.add("Oceania");
-            continents.add("South America");
-
-            int i = 0;
-
-            while (rset.next()) {
-
-                Continent continentPopulation = new Continent();
-                continentPopulation.Name = rset.getString("country.Continent");
-                continentPopulation.CityPopulation = rset.getLong("SUM(city.Population)");
+                continentPopulation.population = rset.getLong("SUM(country.Population)");
+               // continentPopulation.CityPopulation = rset.getLong("SUM(city.Population)");
                 continentPopulation.CityPopulationPercent = rset.getFloat("(SUM(city.Population)/SUM(country.Population))*100");
                 continentPopulation.NotCityPopulation = rset.getLong("SUM(country.Population)-SUM(city.Population)");
                 continentPopulation.NotCityPopulationPercent = rset.getFloat("((SUM(country.Population)-SUM(city.Population))/SUM(country.Population))*100");
                 continentArray.add(continentPopulation);
-                i++;
-
             }
             return continentArray;
 
@@ -698,72 +826,7 @@ public class App {
         }
     }
 
-    public ArrayList<Continent> getContinentPercentPopulation(){
-        try {
-            // Create an SQL statement
-            Statement stmt = con.createStatement();
-            // Create string for SQL statement
-            String strSelect =
-                    "SELECT country.Continent, SUM(city.Population)"
-                            + "FROM country JOIN city ON country.Code = city.CountryCode "
-                            + "GROUP BY country.Continent";
-
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            ArrayList<Continent> continentArray = new ArrayList<>();
-
-            List<String> continents = new ArrayList<>();
-            continents.add("Asia");
-            continents.add("Europe");
-            continents.add("North America");
-            continents.add("Africa");
-            continents.add("Oceania");
-            continents.add("South America");
-
-            int i = 0;
-
-            while (rset.next()) {
-
-                Continent continentPopulation = new Continent();
-                continentPopulation.Name = rset.getString("country.Continent");
-                continentPopulation.population = rset.getInt("SUM(country.Population)");
-                continentPopulation.CityPopulation = rset.getInt("SUM(city.Population)");
-                continentPopulation.CityPopulationPercent = rset.getFloat("(SUM(city.Population)/SUM(country.Population))*100");
-                continentPopulation.NotCityPopulation = rset.getInt("SUM(country.Population)-SUM(city.Population)");
-                continentPopulation.NotCityPopulationPercent = rset.getFloat("((SUM(country.Population)-SUM(city.Population))/SUM(country.Population))*100");
-                continentArray.add(continentPopulation);
-                i++;
-            }
-                return continentArray;
-
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Failed to get country details");
-            return null;
-        }
-    }
-
-    public void displayPopulationPercentContinent (ArrayList<Continent> continentArray) {
-        if (continentArray == null) {
-            System.out.println("No countries found");
-            return;
-        }
-
-        System.out.println(String.format("%-20s %-20s %-20s %-20s %-20s %-20s", "Name", "Population", "City Population", "City Population %", "Rural Population", "Rural Population %"));
-        // Loop over all countries in the list
-        for (Continent continent : continentArray) {
-            String country_string =
-                    String.format("%-20s %-20s %-20s %-20s %-20s %-20s",
-                            continent.Name, continent.population, continent.CityPopulation, continent.CityPopulationPercent, continent.NotCityPopulation, continent.NotCityPopulationPercent);
-            System.out.println(country_string);
-        }
-        System.out.println("\n");
-    }
-
-
-
-    public Continent getThePopulationContinent(/*String name*/){
+    public Continent getThePopulationContinent(){
         try {
             // Create an SQL statement
             Statement stmt = con.createStatement();
@@ -771,7 +834,7 @@ public class App {
             String strSelect =
                     "SELECT country.Continent, SUM(Population) "
                             + "FROM country "
-                            +"WHERE country.Continent  LIKE '" + "Europe" + "' "
+                            + "WHERE country.Continent='Europe'"
                             + "GROUP BY country.Continent";
 
 
@@ -804,154 +867,210 @@ public class App {
         }
     }
 
-   /* public List GetCountriesCont(String continentIn)
-    {
-        if(continentIn == null)
-        {
-            System.out.println("No continent entered");
-            return null;
-        }
+    //28 - See population of the Region ***WORKS***
+    @RequestMapping("/PopulationRegion")
+    public ArrayList<Region> getPoulationRegion() {
 
-        if(continentIn != "Europe" && continentIn != "Asia" && continentIn != "North America" && continentIn != "Africa" && continentIn != "Oceania" && continentIn != "Antartica" && continentIn != "South America")
-        {
-            System.out.println("Invalid Continent Entered");
-            return null;
-        }
-        try
-        {
+        try {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT Name "
+                    "SELECT country.Region, SUM(country.Population), SUM(city.Population), (SUM(city.Population)/SUM(country.Population))*100, SUM(country.Population)-SUM(city.Population), ((SUM(country.Population)-SUM(city.Population))/SUM(country.Population))*100 "
+                            + "FROM country JOIN city ON country.Code = city.CountryCode "
+                            + "WHERE country.Region='Eastern Europe'"
+                            + "GROUP BY country.Region";
+
+
+            ResultSet rset = stmt.executeQuery(strSelect);
+
+            ArrayList<Region> regionArray = new ArrayList<>();
+
+            while (rset.next()) {
+                Region populationRegion = new Region();
+                populationRegion.Name = rset.getString("country.Region");
+                populationRegion.Population = rset.getLong("SUM(country.Population)");
+                populationRegion.CityPopulation = rset.getLong("SUM(city.Population)");
+                populationRegion.CityPopulationPercent = rset.getFloat("(SUM(city.Population)/SUM(country.Population))*100");
+                populationRegion.NotCityPopulation = rset.getLong("SUM(country.Population)-SUM(city.Population)");
+                populationRegion.NotCityPopulationPercent = rset.getFloat("((SUM(country.Population)-SUM(city.Population))/SUM(country.Population))*100");
+                regionArray.add(populationRegion);
+            }
+            return regionArray;
+
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+            System.out.println("Failed To get population ");
+            return null;
+        }
+    }
+
+    public Region getThePopulationRegion(){
+        try {
+            // Create an SQL statement
+            Statement stmt = con.createStatement();
+            // Create string for SQL statement
+            String strSelect =
+                    "SELECT country.Continent, SUM(Population) "
                             + "FROM country "
-                            + "WHERE Continent = " + "'" + continentIn + "' "
-                            + "ORDER BY Population DESC";
+                            + "WHERE country.Continent='Eastern Europe'"
+                            + "GROUP BY country.Continent";
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            List countries = new ArrayList();
-            while (rset.next())
-            {
-                countries.add(rset.getString("country.Name"));
-            }
-            return countries;
-        }
-        catch(Exception e){
+
+            if (rset.next()) {
+
+                Region region = new Region();
+                region.Name = rset.getString("country.Continent");
+                region.Population = rset.getLong("SUM(Population)");
+                return region;
+            } else
+                return null;
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed To Print Countries from continent");
+            System.out.println("Failed to get country details");
             return null;
         }
     }
-    /*
-   public List GetCountriesReg(String regIn)
-    {
-        try
-        {
+
+    public void displayPopulationRegion (Region region) {
+        if (region != null) {
+            System.out.println(region.Name + " " + region.Population);
+        }
+        else {
+
+            System.out.println("No population in continent");
+        }
+    }
+
+
+
+    //29 - See population of the country ***WORKS***
+    @RequestMapping("/PopulationCountry")
+    public ArrayList<Country> getPoulationCountry() {
+
+        try {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT Name "
+                    "SELECT Code, Name, Continent, Region, Population, Capital "
                             + "FROM country "
-                            + "WHERE Region = " + "'" + regIn + "' "
-                            + "ORDER BY Population DESC";
+                            + "WHERE country.name='United Kingdom'";
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            List countries = new ArrayList();
-            while (rset.next())
-            {
-                countries.add(rset.getString("country.Name"));
+            ArrayList<Country> countryArray = new ArrayList<>();
+
+            while (rset.next()) {
+                Country populationCountry = new Country();
+                populationCountry.CountryName = rset.getString("country.Region");
+                populationCountry.Population = rset.getInt("country.Population");
+                countryArray.add(populationCountry);
             }
-            return countries;
-        }
-        catch(Exception e){
+            return countryArray;
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed To Print Countries from region");
+            System.out.println("Failed To get population ");
             return null;
         }
     }
 
-    public List GetCityWorld()
-    {
-        try
-        {
+    public void displayPopulationCountry (Country country) {
+        if (country != null) {
+            System.out.println(country.CountryName + " " + country.Population);
+        }
+        else {
+
+            System.out.println("No population in continent");
+        }
+    }
+
+    //30 - See population of a district ***WORKS***
+    @RequestMapping("/PopulationDistrict")
+    public ArrayList<District> getPoulationDistrict() {
+
+        try {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT Name "
+                    "SELECT District, SUM(Population) "
                             + "FROM city "
-                            + "ORDER BY Population DESC";
+                            + "WHERE city.District='Wales'";
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            List countries = new ArrayList();
-            while (rset.next())
-            {
-                countries.add(rset.getString("city.Name"));
+            ArrayList<District> districtArray = new ArrayList<>();
+
+            while (rset.next()) {
+                District populationDistrict = new District();
+                populationDistrict.District = rset.getString("District");
+                populationDistrict.population = rset.getInt("SUM(population)");
+                districtArray.add(populationDistrict);
             }
-            return countries;
-        }
-        catch(Exception e){
+            return districtArray;
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed To Print Cities from World");
+            System.out.println("Failed To get population ");
             return null;
         }
     }
 
-    public List GetCountriesWorldReg(String continentIn)
-    {
-        try
-        {
-            Statement stmt = con.createStatement();
-
-            String strSelect =
-                    "SELECT Name "
-                            + "FROM country " + "'" + continentIn + "' "
-                            + "ORDER BY Population DESC";
-
-            ResultSet rset = stmt.executeQuery(strSelect);
-
-            List countries = new ArrayList();
-            while (rset.next())
-            {
-                countries.add(rset.getString("country.Name"));
-            }
-            return countries;
+    public void displayPopulationDistrict (District district) {
+        if (district != null) {
+            System.out.println(district.District + " " + district.population);
         }
-        catch(Exception e){
-            System.out.println(e.getMessage());
-            System.out.println("Failed To Print Countries from world");
-            return null;
+        else {
+
+            System.out.println("No population in District");
         }
     }
-*/
-    /*public List GetCityCont(String cityCont)
-    {
-        try
-        {
+
+
+    //31 - See population of a city ***WORKS***
+    @RequestMapping("/PopulationCity")
+    public ArrayList<City> getPoulationCity() {
+
+        try {
             Statement stmt = con.createStatement();
 
             String strSelect =
-                    "SELECT Name "
+                    "SELECT city.Name, Population "
                             + "FROM city "
-                            + "WHERE continent = " + "'" + cityCont + "'"
-                            + "ORDER BY Population DESC";
+                            + "WHERE city.Name='Edinburgh'";
 
             ResultSet rset = stmt.executeQuery(strSelect);
 
-            List countries = new ArrayList();
-            while (rset.next())
-            {
-                countries.add(rset.getString("country.Name"));
+            ArrayList<City> cityArray = new ArrayList<>();
+
+            while (rset.next()) {
+                City populationCity = new City();
+                populationCity.CityName = rset.getString("city.Name");
+                populationCity.population = rset.getInt("population");
+                cityArray.add(populationCity);
             }
-            return countries;
-        }
-        catch(Exception e){
+            return cityArray;
+
+        } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Failed To Print Cities from Continent");
+            System.out.println("Failed To get population ");
             return null;
         }
-    }*/
+    }
+
+    public void displayPopulationCity(City city) {
+        if (city != null) {
+            System.out.println(city.CityName + " " + city.population);
+        }
+        else {
+
+            System.out.println("No population in City");
+        }
+    }
+
+
 
     }
 
