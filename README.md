@@ -10,6 +10,7 @@ License - [![LICENSE](https://img.shields.io/github/license/GregorKelly/SEM-Grou
 Release - [![Releases](https://img.shields.io/github/release/GregorKelly/SEM-Group-Project/all.svg?style=flat-square)](https://github.com/GregorKelly/SEM-Group-Project/releases)
 
 X requirements of 32 have been implemented, which is %.
+
 | ID |                                 Name                                         |  Met   | Screenshot |
 |----|:----------------------------------------------------------------------------:|-------:|-----------:|
 | 1  | All the countries in the world organised by largest population to smallest.  |  Yes   |            |
