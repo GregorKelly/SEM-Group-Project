@@ -9,7 +9,7 @@ License - [![LICENSE](https://img.shields.io/github/license/GregorKelly/SEM-Grou
 
 Release - [![Releases](https://img.shields.io/github/release/GregorKelly/SEM-Group-Project/all.svg?style=flat-square)](https://github.com/GregorKelly/SEM-Group-Project/releases)
 
-10 requirements of 32 have been implemented, which is 31.25%.
+12 requirements of 32 have been implemented, which is 37.5%.
 
 | ID |                                 Name                                         |  Met   | Screenshot |
 |----|:----------------------------------------------------------------------------:|-------:|-----------:|
