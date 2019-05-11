@@ -42,6 +42,6 @@ Release - [![Releases](https://img.shields.io/github/release/GregorKelly/SEM-Gro
 | 27 | The population of the continent.        | Yes |Population of Europe ![27](Screenshots/27.PNG)|
 | 28 | The population of the region.           | Yes |Population of Eastern Europe ![28](Screenshots/28.PNG)|
 | 29 | The population of the country.          | Yes |Population of the United Kingdom ![29](Screenshots/29.PNG)|
-| 30 | The population of the district.         | No ||
-| 31 | The population of the city.             | No ||
+| 30 | The population of the district.         | Yes |Population of Wales ![30](Screenshots/30.PNG)|
+| 31 | The population of the city.             | Yes |Population of Edinburgh ![31](Screenshots/31.PNG)|
 | 32 | The number of people who speak these languages (greatest to smallest) including the percentage of the world population: Chinese, English, Hindi, Spanish, Arabic | No ||
