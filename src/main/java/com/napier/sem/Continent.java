@@ -8,9 +8,9 @@ public class Continent {
 
     public long CityPopulation;
 
-    //public float cityPopulationPercentage;
+    public float CityPopulationPercent;
 
-   // public long notCityPopulation;
+    public long NotCityPopulation;
 
-    //public float notCityPopulationPercentage;
+    public float NotCityPopulationPercent;
 }

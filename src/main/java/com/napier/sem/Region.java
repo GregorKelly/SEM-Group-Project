@@ -8,9 +8,9 @@ public class Region {
 
     public long cityPopulation;
 
-   // public float cityPopulationPercentage;
+    public float cityPopulationPercent;
 
-    //public long notCityPopulation;
+    public long notCityPopulation;
 
-   // public float notCityPopulationPercentage;
+     public float notCityPopulationPercent;
 }
